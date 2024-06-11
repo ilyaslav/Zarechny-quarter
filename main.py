@@ -110,9 +110,6 @@ class QuestApp(MDApp):
         self.close_dialog()
         self.sm.transition = SlideTransition(direction='right')
         self.sm.current = 'start'
-        self.time = 0
-        if self.timer:
-            self.timer.cancel()
 
     def open_game_page(self):
         self.close_dialog()
@@ -121,9 +118,9 @@ class QuestApp(MDApp):
 
     def open_quest_page(self):
         self.close_dialog()
+        self.configure_questCards()
         self.sm.transition = SlideTransition(direction='left')
         self.sm.current = 'runing_game'
-        self.start_timer()
 
     def reset_error(self):
         self.dialog.content_cls.textField.error = False
@@ -135,6 +132,7 @@ class QuestApp(MDApp):
         self.dialog.content_cls.textField.helper_text = error_text
 
     def start_timer(self):
+        self.time = self.game.get_time()
         self.timer = Clock.schedule_interval(self.set_time, 1)
 
     def set_time(self, dt):
@@ -157,8 +155,19 @@ class QuestApp(MDApp):
         team_name = self.dialog.content_cls.textField.text
         if self.game.team_exists(team_name):
             self.game.choose_team(team_name)
-            self.open_game_page()
-            self.set_selected_team(team_name)
+            if self.game.team.status == "не начата":
+                self.open_game_page()
+                screen = self.sm.get_screen('game')
+                self.set_selected_team(team_name, screen)
+            elif self.game.team.status == "начата":
+                self.open_quest_page()
+                self.start_timer()
+                screen = self.sm.get_screen('runing_game')
+                self.set_selected_team(team_name, screen)
+            else:
+                self.open_quest_page()
+                screen = self.sm.get_screen('runing_game')
+                self.set_selected_team(team_name, screen)
         else:
             self.set_error('Неверное имя команды')
 
@@ -167,16 +176,48 @@ class QuestApp(MDApp):
         if not self.game.team_exists(team_name):
             self.game.reg_team(team_name)
             self.open_game_page()
-            self.set_selected_team(team_name)
+            screen = self.sm.get_screen('game')
+            self.set_selected_team(team_name, screen)
         else:
             self.set_error('Такая команда уже существует')
 
+    def start_game(self):
+        self.game.start_game()
+        self.start_timer()
+        self.open_quest_page()
+
     def exit(self):
         self.game = Game()
+        self.time = 0
+        if self.timer:
+            self.timer.cancel()
         self.open_start_page()
 
-    def set_selected_team(self, team_name):
-        screen = self.sm.get_screen('game')
+    def configure_questCards(self):
+        screen = self.sm.get_screen('runing_game')
+        screen.quest.questCard1.text = self.game.question[0]
+        screen.quest.questCard2.text = self.game.question[1]
+        screen.quest.questCard3.text = self.game.question[2]
+        screen.quest.questCard4.text = self.game.question[3]
+
+        if self.game.get_quest(1):
+            screen.quest.questCard1.text = 'Верный ответ'
+        if self.game.get_quest(2):
+            screen.quest.questCard2.text = 'Верный ответ'
+        if self.game.get_quest(3):
+            screen.quest.questCard3.text = 'Верный ответ'
+        if self.game.get_quest(4):
+            screen.quest.questCard4.text = 'Верный ответ'
+
+    def check_answer(self, question, answer):
+        if self.game.check_answer(question, answer):
+            self.game.compleate_quest(question)
+            self.configure_questCards()
+            self.close_dialog()
+        else:
+            self.set_error('Неверный ответ')
+
+    def set_selected_team(self, team_name, screen):
         screen.rating.selected_team.number = '101'
         screen.rating.selected_team.team_name = team_name
         screen.rating.selected_team.time = '0'

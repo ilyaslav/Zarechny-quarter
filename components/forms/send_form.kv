@@ -4,6 +4,8 @@
     size_hint: 1, None
     adaptive_height: True
 
+    textField: textField
+
     MDLabel:
         text: root.question
         theme_text_color: "Primary"
@@ -13,9 +15,14 @@
         color: get_color_from_hex('#607d8b')
 
     MDTextField:
+        id: textField
         hint_text:"Введите ответ"
         mode:"rectangle"
         color_mode: 'accent'
+        helper_text: ""
+        helper_text_mode: "on_error"
+        error: False
+        on_text: app.reset_error()
 
     MDBoxLayout:
         spacing: '12dp'
@@ -29,3 +36,4 @@
         MDRaisedButton:
             text: "Отправить"
             size_hint_x: .5
+            on_release: app.check_answer(root.question, textField.text)

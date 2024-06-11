@@ -51,6 +51,7 @@ class Database:
     @error_handler
     def start_game(self, table_name, team_name, start_time):
           with self.connection:
+            print(start_time)
             sql = f"UPDATE {table_name} SET start_time = ?, status = 1 WHERE team_name = ?"
             params = (start_time, team_name)
             self.cursor.execute(sql, params)

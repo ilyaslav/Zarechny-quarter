@@ -2,6 +2,10 @@
 
 <QuestPage>
     timer: timer
+    questCard1: questCard1
+    questCard2: questCard2
+    questCard3: questCard3
+    questCard4: questCard4
     FitImage:
         source:"img/quest_background.jpg"
 
@@ -46,14 +50,18 @@
             pos_hint: {"center_x": .5, "center_y": .5}
 
             QuestCard:
-                text: "Задание 1"
+                id: questCard1
+                text: "Задание"
                 function: app.show_send_form
             QuestCard:
-                text: "Задание 2"
+                id: questCard2
+                text: "Задание"
                 function: app.show_send_form
             QuestCard:
-                text: "Задание 3"
+                id: questCard3
+                text: "Задание"
                 function: app.show_send_form
             QuestCard:
-                text: "Задание 4"
+                id: questCard4
+                text: "Задание"
                 function: app.show_send_form
