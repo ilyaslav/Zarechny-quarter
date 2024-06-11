@@ -1,0 +1,11 @@
+<QuestCard>
+    FloatLayout:
+        MDLabel:
+            pos_hint: {"center_x": .6, "center_y": .9}
+            text: root.text
+            padding: root.height/20
+
+        MDRaisedButton:
+            text: "Ответить"
+            pos_hint: {"center_x": .8, "center_y": .2}
+            on_release: root.function(root.text)

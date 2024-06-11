@@ -1,0 +1,29 @@
+<HelpForm>
+    orientation: "vertical"
+    spacing: "40dp"
+    size_hint: 1, None
+    adaptive_height: True
+
+    MDLabel:
+        text: "Подсказка"
+        theme_text_color: "Primary"
+        halign: "center"
+        font_style: "H4"
+        font_name: 'PT Serif'
+        color: get_color_from_hex('#607d8b')
+        padding: [0, 0, 0, root.height/10]
+
+    MDCard:
+        pos_hint: {"center_x": .5, "center_y": .5}
+        size_hint_x: .8
+        height: root.height
+        MDLabel:
+            pos_hint: {"center_x": .1, "center_y": .9}
+            text: root.help
+            padding: root.height/20
+
+    MDRaisedButton:
+        text: "Продолжить"
+        size_hint_x: .5
+        pos_hint: {"center_x": .5, "center_y": .5}
+        on_release: app.close_dialog()

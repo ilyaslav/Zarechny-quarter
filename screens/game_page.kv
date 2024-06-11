@@ -1,0 +1,22 @@
+#:import RulesPage screens.rules_page.RulesPage
+#:import RatingPage screens.rating_page.RatingPage
+
+<GamePage>
+    name: 'game'
+    rules: rules
+    rating: rating
+    MDBottomNavigation:
+
+        MDBottomNavigationItem:
+            name: "game"
+            icon: "icons/play.png"
+            text: "Играть"
+            RulesPage:
+                id: rules
+
+        MDBottomNavigationItem:
+            name: "rating"
+            icon: "icons/rating.png"
+            text: "Рейтинг команд"
+            RatingPage:
+                id: rating

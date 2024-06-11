@@ -1,0 +1,59 @@
+#:import QuestCard components.cards.quest_card.QuestCard
+
+<QuestPage>
+    timer: timer
+    FitImage:
+        source:"img/quest_background.jpg"
+
+    MDBoxLayout:
+        orientation: "vertical"
+        spacing: root.height/20
+        padding: [0, root.height/20, 0, root.height/10]
+
+        MDBoxLayout:
+            size_hint_y: .1
+            size_hint_x: .8
+            pos_hint: {"center_x": .5, "center_y": .5}
+
+            MDRaisedButton:
+                text: "Подсказка"
+                on_release: app.show_help_form()
+                size_hint_y: 1
+                size_hint_x: .2
+
+            MDCard:
+                size_hint_x: .6
+                MDLabel:
+                    id: timer
+                    text: "00 : 00: 00"
+                    halign: "center"
+                    font_size: (root.height+root.width)/30
+                    pos_hint: {"center_x": .5, "center_y": .55}
+
+            MDFillRoundFlatIconButton:
+                size_hint_x: .2
+                text: "Выйти"
+                icon: "logout"
+                on_release: app.exit()
+                size_hint_y: 1
+
+        MDGridLayout:
+            cols: 2
+            rows: 2
+            spacing: root.height/20
+            size_hint_y: .9
+            size_hint_x: .8
+            pos_hint: {"center_x": .5, "center_y": .5}
+
+            QuestCard:
+                text: "Задание 1"
+                function: app.show_send_form
+            QuestCard:
+                text: "Задание 2"
+                function: app.show_send_form
+            QuestCard:
+                text: "Задание 3"
+                function: app.show_send_form
+            QuestCard:
+                text: "Задание 4"
+                function: app.show_send_form

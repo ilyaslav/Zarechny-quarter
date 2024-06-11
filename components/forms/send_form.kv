@@ -1,0 +1,31 @@
+<SendForm>
+    orientation: "vertical"
+    spacing: "20dp"
+    size_hint: 1, None
+    adaptive_height: True
+
+    MDLabel:
+        text: root.question
+        theme_text_color: "Primary"
+        halign: "center"
+        font_style: "H4"
+        font_name: 'PT Serif'
+        color: get_color_from_hex('#607d8b')
+
+    MDTextField:
+        hint_text:"Введите ответ"
+        mode:"rectangle"
+        color_mode: 'accent'
+
+    MDBoxLayout:
+        spacing: '12dp'
+        adaptive_height: True
+
+        MDRaisedButton:
+            text: "Отмена"
+            size_hint_x: .5
+            on_release: app.close_dialog()
+
+        MDRaisedButton:
+            text: "Отправить"
+            size_hint_x: .5

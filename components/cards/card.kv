@@ -1,0 +1,18 @@
+<Card@MDCard>
+    orientation: 'vertical'
+    pos_hint: {"center_x": .5, "center_y": .5}
+    padding: "4dp"
+    size_hint: .3, .3
+    ripple_behavior: True
+
+    Image:
+        source: root.source
+
+    MDLabel:
+        text: root.text
+        font_name: 'PT Serif'
+        adaptive_height: True
+        color: get_color_from_hex('#607d8b')
+        bold: True
+        halign: "center"
+        font_size: (root.height+root.width)/15

@@ -1,0 +1,31 @@
+<RulesPage>
+    FitImage:
+        source:"img/quest_background.jpg"
+    MDBoxLayout:
+        orientation: "vertical"
+        spacing: root.height/20
+        padding: [0, root.height/20, 0, root.height/10]
+
+        MDFillRoundFlatIconButton:
+            text: "Выйти"
+            icon: "logout"
+            adaptive_height: True
+            pos_hint: {"center_x": .85, "center_y": .5}
+            on_release: app.exit()
+
+        MDCard:
+            size_hint_y: .6
+            pos_hint: {"center_x": .5, "center_y": .5}
+            size_hint_x: .8
+
+            MDLabel:
+                pos_hint: {"center_x": .1, "center_y": .9}
+                text: "Правила игры"
+                padding: root.height/20
+
+        MDRaisedButton:
+            text: "Начать игру"
+            size_hint_y: .1
+            pos_hint: {"center_x": .5, "center_y": .5}
+            size_hint_x: .3
+            on_release: app.open_quest_page()

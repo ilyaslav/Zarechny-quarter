@@ -1,0 +1,47 @@
+<LoginForm@MDBoxLayout>
+    orientation: "vertical"
+    spacing: "20dp"
+    size_hint: 1, None
+    adaptive_height: True
+
+    textField: textField
+
+    MDLabel:
+        text: "Заречный квартал"
+        theme_text_color: "Primary"
+        halign: "center"
+        font_style: "H4"
+        font_name: 'PT Serif'
+        color: get_color_from_hex('#607d8b')
+
+    MDLabel:
+
+    MDTextField:
+        id: textField
+        hint_text:"Название команды"
+        mode:"rectangle"
+        color_mode: 'accent'
+        helper_text: ""
+        helper_text_mode: "on_error"
+        error: False
+        on_text: app.reset_error()
+
+    MDRaisedButton:
+        pos_hint: {"center_x": .5, "center_y": .5}
+        size_hint_x: .5
+        text: "Зарегистрироваться"
+        on_release: app.show_registration_dialog()
+
+    MDBoxLayout:
+        spacing: '12dp'
+        adaptive_height: True
+
+        MDRaisedButton:
+            text: "Назад"
+            size_hint_x: .5
+            on_release: app.close_dialog()
+
+        MDRaisedButton:
+            text: "Войти"
+            size_hint_x: .5
+            on_release: app.login_team()

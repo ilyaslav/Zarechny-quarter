@@ -1,0 +1,22 @@
+#:import QuestPage screens.quest_page.QuestPage
+#:import RatingPage screens.rating_page.RatingPage
+
+<RuningGamePage>
+    name: 'runing_game'
+    quest: quest
+    rating: rating
+    MDBottomNavigation:
+
+        MDBottomNavigationItem:
+            name: "game"
+            icon: "icons/play.png"
+            text: "Играть"
+            QuestPage:
+                id: quest
+
+        MDBottomNavigationItem:
+            name: "rating"
+            icon: "icons/rating.png"
+            text: "Рейтинг команд"
+            RatingPage:
+                id: rating

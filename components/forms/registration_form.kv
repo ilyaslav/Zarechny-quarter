@@ -1,0 +1,41 @@
+<RegistrationForm>
+    orientation: "vertical"
+    spacing: "20dp"
+    size_hint: 1, None
+    adaptive_height: True
+
+    textField: textField
+
+    MDLabel:
+        text: "Регистрация"
+        theme_text_color: "Primary"
+        halign: "center"
+        font_style: "H4"
+        font_name: 'PT Serif'
+        color: get_color_from_hex('#607d8b')
+
+    MDLabel:
+
+    MDTextField:
+        id: textField
+        hint_text:"Название команды"
+        mode:"rectangle"
+        color_mode: 'accent'
+        helper_text: ""
+        helper_text_mode: "on_error"
+        error: False
+        on_text: app.reset_error()
+
+    MDBoxLayout:
+        spacing: '12dp'
+        adaptive_height: True
+
+        MDRaisedButton:
+            text: "Назад"
+            size_hint_x: .5
+            on_release: app.show_login_dialog()
+
+        MDRaisedButton:
+            text: "Зарегистрироваться"
+            size_hint_x: .5
+            on_release: app.reg_team()
