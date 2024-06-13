@@ -25,7 +25,9 @@ class Game:
         }
 
     def get_time(self):
-        return time() - self.team.start_time
+        if self.team.status == "начата":
+            return time() - self.team.start_time
+        return self.team.game_time
 
     def reg_team(self, team_name):
         self.team = Team(team_name=team_name)
@@ -54,8 +56,9 @@ class Game:
                      f'quest{quest_id}'
                     )
 
-    def finish_game(self, team_name, time):
-        db.finish_game(self.category, team_name, time)
+    def finish_game(self):
+        t = int(time() - self.team.start_time)
+        db.finish_game(self.category, self.team.team_name, t)
 
     def check_game_status(self):
         return not 0 in self.team.quest.values()
@@ -65,3 +68,18 @@ class Game:
 
     def check_answer(self, question, answer):
         return self.tasks[question] == answer.lower()
+
+    def get_rating(self):
+        return db.get_rating(self.category)
+
+    def get_position(self):
+        rating = self.get_rating()
+        team_time = self.get_time()
+        if self.team.status == 'начата':
+            position = 0
+            for i in rating:
+                position+=1
+                if team_time < i[1]:
+                    break
+            return f'{position+1}'
+        return f'{rating.index((self.team.team_name, self.get_time()))+1}'

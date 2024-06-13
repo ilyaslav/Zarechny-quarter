@@ -1,4 +1,5 @@
 <QuestCard>
+    button: button
     FloatLayout:
         MDLabel:
             pos_hint: {"center_x": .6, "center_y": .9}
@@ -6,6 +7,8 @@
             padding: root.height/20
 
         MDRaisedButton:
+            id: button
             text: "Ответить"
             pos_hint: {"center_x": .8, "center_y": .2}
             on_release: root.function(root.text)
+            opacity: 1

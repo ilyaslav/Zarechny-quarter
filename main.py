@@ -6,6 +6,7 @@ from kivy.clock import Clock
 
 from kivymd.app import MDApp
 from kivymd.uix.dialog import MDDialog
+from kivymd.uix.list import MDList
 
 from screens.start_page import StartPage
 from screens.game_page import GamePage
@@ -14,6 +15,7 @@ from components.forms.login_form import LoginForm
 from components.forms.registration_form import RegistrationForm
 from components.forms.send_form import SendForm
 from components.forms.help_form import HelpForm
+from components.cards.rating_card import RatingCard
 
 from Game import Game
 
@@ -138,8 +140,8 @@ class QuestApp(MDApp):
     def set_time(self, dt):
         self.time+= 1
         screen = self.sm.get_screen('runing_game')
-        screen.quest.timer.text = self.get_time()
-        screen.rating.selected_team.time = self.get_time()
+        screen.quest.timer.text = self.get_time(self.time)
+        screen.rating.selected_team.time = self.get_time(self.time)
 
     def set_children(self):
         self.game.category = 'children_table'
@@ -159,15 +161,18 @@ class QuestApp(MDApp):
                 self.open_game_page()
                 screen = self.sm.get_screen('game')
                 self.set_selected_team(team_name, screen)
+                self.get_rating(screen)
             elif self.game.team.status == "начата":
                 self.open_quest_page()
                 self.start_timer()
                 screen = self.sm.get_screen('runing_game')
                 self.set_selected_team(team_name, screen)
+                self.get_rating(screen)
             else:
                 self.open_quest_page()
                 screen = self.sm.get_screen('runing_game')
                 self.set_selected_team(team_name, screen)
+                self.get_rating(screen)
         else:
             self.set_error('Неверное имя команды')
 
@@ -178,6 +183,7 @@ class QuestApp(MDApp):
             self.open_game_page()
             screen = self.sm.get_screen('game')
             self.set_selected_team(team_name, screen)
+            self.get_rating(screen)
         else:
             self.set_error('Такая команда уже существует')
 
@@ -202,30 +208,76 @@ class QuestApp(MDApp):
 
         if self.game.get_quest(1):
             screen.quest.questCard1.text = 'Верный ответ'
+            screen.quest.questCard1.button.opacity = 0
+        else:
+            screen.quest.questCard1.button.opacity = 1
+
         if self.game.get_quest(2):
             screen.quest.questCard2.text = 'Верный ответ'
+            screen.quest.questCard2.button.opacity = 0
+        else:
+            screen.quest.questCard2.button.opacity = 1
+
         if self.game.get_quest(3):
             screen.quest.questCard3.text = 'Верный ответ'
+            screen.quest.questCard3.button.opacity = 0
+        else:
+            screen.quest.questCard3.button.opacity = 1
+
         if self.game.get_quest(4):
             screen.quest.questCard4.text = 'Верный ответ'
+            screen.quest.questCard4.button.opacity = 0
+        else:
+            screen.quest.questCard4.button.opacity = 1
 
     def check_answer(self, question, answer):
         if self.game.check_answer(question, answer):
             self.game.compleate_quest(question)
             self.configure_questCards()
             self.close_dialog()
+            self.stop_game()
         else:
             self.set_error('Неверный ответ')
 
-    def set_selected_team(self, team_name, screen):
-        screen.rating.selected_team.number = '101'
-        screen.rating.selected_team.team_name = team_name
-        screen.rating.selected_team.time = '0'
+    def stop_game(self):
+        if self.game.check_game_status():
+            self.game.finish_game()
+            if self.timer:
+                self.timer.cancel()
+            screen = self.sm.get_screen('runing_game')
+            self.get_rating(screen)
 
-    def get_time(self):
-        hours = int(self.time/3600)
-        minutes = int(self.time/60 % 60)
-        seconds = int(self.time%60)
+    def set_selected_team(self, team_name, screen):
+        if self.game.team.status == 'не начата':
+            screen.rating.selected_team.opacity = 0
+            screen.rating.selected_team.height = 0
+        else:
+            screen.rating.selected_team.opacity = 1
+            screen.rating.selected_team.number = self.game.get_position()
+            screen.rating.selected_team.team_name = team_name
+            time = self.get_time(self.game.get_time())
+            screen.rating.selected_team.time = time
+            screen.quest.timer.text = time
+
+    def get_rating(self, screen):
+        list_layout = MDList()
+        comands = self.game.get_rating()
+        j = 0
+        for i in comands:
+            j+=1
+            item = RatingCard(
+                              number=f'{j}',
+                              team_name=i[0],
+                              time=self.get_time(i[1])
+                              )
+            list_layout.add_widget(item)
+        screen.rating.scrollView.clear_widgets()
+        screen.rating.scrollView.add_widget(list_layout)
+
+    def get_time(self, time):
+        hours = int(time/3600)
+        minutes = int(time/60 % 60)
+        seconds = int(time%60)
         if hours < 10:
             hours = f'0{hours}'
         if minutes < 10:

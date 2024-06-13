@@ -38,7 +38,7 @@ class Database:
           with self.connection:
             sql = f"SELECT team_name, game_time FROM {table_name} WHERE status = 3 ORDER BY game_time"
             result = self.cursor.execute(sql).fetchall()
-            return result[:25]
+            return result[:100]
 
     @error_handler
     def add_team(self, table_name, team_name):
