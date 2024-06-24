@@ -73,6 +73,14 @@ class Database:
             self.cursor.execute(sql, params)
             self.connection.commit()
 
+    @error_handler
+    def get_help(self, table_name, team_name, time):
+         with self.connection:
+            sql = f"UPDATE {table_name} SET start_time = ? WHERE team_name = ?"
+            params = (time, team_name)
+            self.cursor.execute(sql, params)
+            self.connection.commit()
+
 db = Database()
 if __name__ == "__main__":
     print(db.set_quest('children_table', 'qwe', 'quest1'))

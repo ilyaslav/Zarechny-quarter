@@ -97,11 +97,11 @@ class QuestApp(MDApp):
             )
         self.dialog.open()
 
-    def show_help_form(self):
+    def show_help_form(self, text):
         self.close_dialog()
         self.dialog = MDDialog(
                 type="custom",
-                content_cls=HelpForm(help='Текст подсказки'),
+                content_cls=HelpForm(help=text),
             )
         self.dialog.open()
 
@@ -191,6 +191,9 @@ class QuestApp(MDApp):
         self.game.start_game()
         self.start_timer()
         self.open_quest_page()
+        screen = self.sm.get_screen('runing_game')
+        self.set_selected_team(self.game.team.team_name, screen)
+        self.get_rating(screen)
 
     def exit(self):
         self.game = Game()
@@ -273,6 +276,13 @@ class QuestApp(MDApp):
             list_layout.add_widget(item)
         screen.rating.scrollView.clear_widgets()
         screen.rating.scrollView.add_widget(list_layout)
+
+    def get_help(self):
+        if not self.game.team.status == 'окончена':
+            print(self.game.team.status)
+            self.time+=900
+            text = self.game.get_help()
+            self.show_help_form(text)
 
     def get_time(self, time):
         hours = int(time/3600)

@@ -7,6 +7,11 @@ QUESTION2 = 'Задание 2'
 QUESTION3 = 'Задание 3'
 QUESTION4 = 'Задание 4'
 
+HELP1 = 'Подсказка 1'
+HELP2 = 'Подсказка 2'
+HELP3 = 'Подсказка 3'
+HELP4 = 'Подсказка 4'
+
 class Game:
     def __init__(self) -> None:
         self.team = Team()
@@ -83,3 +88,16 @@ class Game:
                     break
             return f'{position+1}'
         return f'{rating.index((self.team.team_name, self.get_time()))+1}'
+
+    def get_help(self):
+        self.team.start_time-=900
+        db.get_help(self.category, self.team.team_name, self.team.start_time)
+        if not self.team.quest['quest1']:
+            return HELP1
+        elif not self.team.quest['quest2']:
+            return HELP2
+        elif not self.team.quest['quest3']:
+            return HELP3
+        elif not self.team.quest['quest4']:
+            return HELP4
+        return ''

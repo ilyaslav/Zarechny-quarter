@@ -6,6 +6,7 @@
     questCard2: questCard2
     questCard3: questCard3
     questCard4: questCard4
+    help: help
     FitImage:
         source:"img/quest_background.jpg"
 
@@ -20,8 +21,9 @@
             pos_hint: {"center_x": .5, "center_y": .5}
 
             MDRaisedButton:
+                id: help
                 text: "Подсказка"
-                on_release: app.show_help_form()
+                on_release: app.get_help()
                 size_hint_y: 1
                 size_hint_x: .2
 
