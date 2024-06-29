@@ -9,32 +9,46 @@
 
     MDBoxLayout:
         orientation: "vertical"
+        spacing: root.height/20
         padding: [0, root.height/20, 0, root.height/10]
 
-        MDFillRoundFlatIconButton:
-            text: "Выйти"
-            icon: "logout"
-            adaptive_height: True
-            pos_hint: {"center_x": .85, "center_y": .5}
-            on_release: app.exit()
+        MDBoxLayout:
+            size_hint_y: .2
+            size_hint_x: .8
+            spacing: root.height/20
+            pos_hint: {"center_x": .5, "center_y": .5}
 
-        FloatLayout:
-            size_hint_y: .1
-            size_hint_x: 1
+            MDLabel:
+                size_hint_x: .2
 
             MDLabel:
                 text: "Рейтинг команд"
                 color: get_color_from_hex('#ffffff')
-                font_size: (root.height+root.width)/24
+                font_size: (root.height+root.width)/35
                 halign: "center"
+                size_hint_x: .6
                 pos_hint: {"center_x": .5, "center_y": .5}
-                padding: [0, 0, 0, root.height/18]
+
+            MDFillRoundFlatIconButton:
+                text: "Выйти"
+                icon: "logout"
+                size_hint_x: .2
+                size_hint_y: .5
+                pos_hint: {"center_x": .5, "center_y": .5}
+                on_release: app.exit()
 
         MDCard:
             orientation: "vertical"
             size_hint_y: .9
             pos_hint: {"center_x": .5, "center_y": .5}
             size_hint_x: .8
+
+            RatingCard:
+                id: selected_team
+                number: "Место"
+                team_name: "Название команды"
+                time: "Время       "
+                opacity: 1
 
             RatingCard:
                 id: selected_team

@@ -7,3 +7,4 @@ class RatingCard(MDBoxLayout):
     team_name = StringProperty()
     time = StringProperty()
     number = StringProperty()
+    halign = StringProperty()

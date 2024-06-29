@@ -16,16 +16,18 @@
         padding: [0, root.height/20, 0, root.height/10]
 
         MDBoxLayout:
-            size_hint_y: .1
+            size_hint_y: .2
             size_hint_x: .8
+            spacing: root.height/20
             pos_hint: {"center_x": .5, "center_y": .5}
 
             MDRaisedButton:
                 id: help
                 text: "Подсказка"
                 on_release: app.get_help()
-                size_hint_y: 1
+                size_hint_y: .5
                 size_hint_x: .2
+                pos_hint: {"center_x": .5, "center_y": .5}
 
             MDCard:
                 size_hint_x: .6
@@ -40,8 +42,9 @@
                 size_hint_x: .2
                 text: "Выйти"
                 icon: "logout"
+                pos_hint: {"center_x": .5, "center_y": .5}
                 on_release: app.exit()
-                size_hint_y: 1
+                size_hint_y: .5
 
         MDGridLayout:
             cols: 2

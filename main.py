@@ -32,6 +32,8 @@ class QuestApp(MDApp):
 
     def build(self):
         Window.size = [1000, 600]
+        #Window.maximize()
+        #Window.fullscreen = True
         self.load_all_kv_files()
         self.theme_cls.primary_palette = "BlueGray"
         self.theme_cls.font_styles.update({

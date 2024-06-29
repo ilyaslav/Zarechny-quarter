@@ -2,17 +2,28 @@
     orientation: 'vertical'
     pos_hint: {"center_x": .5, "center_y": .5}
     padding: "4dp"
-    size_hint: .3, .3
+    size_hint: .2, .2
     ripple_behavior: True
 
-    Image:
-        source: root.source
+    style: "elevated"
+    theme_shadow_color: "Custom"
+    shadow_color: get_color_from_hex('#e5c186')
+    theme_bg_color: "Custom"
+    theme_shadow_offset: "Custom"
+    shadow_offset: (8, -8)
+    theme_shadow_softness: "Custom"
+    shadow_softness: 1
+    theme_elevation_level: "Custom"
+    elevation_level: 2
+
+    #Image:#be5f3c
+    #    source: root.source
 
     MDLabel:
         text: root.text
         font_name: 'PT Serif'
-        adaptive_height: True
         color: get_color_from_hex('#607d8b')
         bold: True
         halign: "center"
+        pos_hint: {"center_x": .5, "center_y": .5}
         font_size: (root.height+root.width)/15
